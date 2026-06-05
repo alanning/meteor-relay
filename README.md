@@ -359,7 +359,7 @@ When the results of any of the cursors change, the input for the next step will 
 Here is a complete example:
 
 ```ts
-createMethod({
+createPublication({
   name: 'allTasks',
   schema: z.object({
     organization: z.string()
@@ -380,14 +380,14 @@ createMethod({
 
 The first step of the pipeline creates a cursor to find all projects the user owns. This cursor is passed in the second object to `withCursors`, with the key `projects`.
 
-The input of the second step has a new property named `projects`, matching what the key for the cursor. The `projects` property has an array of all the docs found by the cursor.
+The input of the second step has a new property named `projects`, matching the key for the cursor. The `projects` property has an array of all the docs found by the cursor.
 
 Whenever the results of the cursor change (maybe the user deleted a project or created a new one), the second step of the pipeline is re-run, with the `projects` property having the new list of docs. This allows it to replace the query being published to use the current list of projects.
 
 Here is an example showing reacting to permission changes:
 
 ```ts
-createMethod({
+createPublication({
   name: 'adminListUsers',
   schema: z.undefined()
 }).pipeline(
